@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: YOUR_MONGODB_URI
+      database: journaldb

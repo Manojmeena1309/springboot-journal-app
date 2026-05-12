@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+
+    </appender>
+
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- Current Active Log File -->
+        <file>logs/journalApp.log</file>
+
+        <!-- Rolling Policy -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+
+            <!-- Rolled File Name Pattern -->
+            <fileNamePattern>
+                logs/journalApp-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+
+            <!-- Max File Size Before Rolling -->
+            <maxFileSize>10MB</maxFileSize>
+
+            <!-- Keep Logs For 10 Days -->
+            <maxHistory>10</maxHistory>
+
+            <!-- Total Log Storage Limit -->
+            <totalSizeCap>1GB</totalSizeCap>
+
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+
+    </appender>
+
+    <logger name="net.engineeringdigest.journalapp"
+            level="DEBUG"
+            additivity="false">
+
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+
+    </logger>
+
+    <root level="INFO">
+
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+
+    </root>
+
+</configuration>
