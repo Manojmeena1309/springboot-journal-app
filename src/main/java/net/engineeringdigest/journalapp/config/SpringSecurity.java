@@ -26,6 +26,7 @@ public class SpringSecurity {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
+    @Lazy
     private JwtFilter jwtFilter;
 
 
