@@ -1,23 +1,23 @@
 spring:
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      username: ${REDIS_USERNAME}
-      password: ${REDIS_PASSWORD}
+      host: your_redis_host
+      port: 12345
+      username: your_redis_username
+      password: your_redis_password
       ssl:
         enabled: true
 
   mongodb:
-    uri: ${MONGODB_URI}
+    uri: your_mongodb_uri
     database: journaldb
     auto-index-creation: true
 
   mail:
-    host: ${smtp.gmail.com}
+    host: smtp.gmail.com
     port: 587
-    username: ${YOUR_GMAIL_ADDRESS}
-    password: ${YOUR_GMAIL_APP_PASSWORD}
+    username: your_email@gmail.com
+    password: your_gmail_app_password
     properties:
       mail:
         smtp:
@@ -27,7 +27,7 @@ spring:
 
 weather:
   api:
-    key: ${WEATHER_API_KEY}
+    key: your_weather_api_key
 
 jwt:
-  secret: ${YOUR_JWT_SECRET_KEY}
+  secret: your_jwt_secret_key
