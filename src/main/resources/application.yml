@@ -8,10 +8,10 @@ spring:
       ssl:
         enabled: true
 
-  mongodb:
-    uri: ${MONGODB_URI}
-    database: journaldb
-    auto-index-creation: true
+    mongodb:
+      uri: ${MONGODB_URI}
+      database: journaldb
+      auto-index-creation: true
 
   mail:
     host: smtp.gmail.com
