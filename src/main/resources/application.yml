@@ -3,6 +3,11 @@ server:
   address: 0.0.0.0
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+
   data:
     redis:
       host: ${REDIS_HOST}
@@ -42,5 +47,6 @@ weather:
 jwt:
   secret: ${JWT_SECRET}
 
-
-
+cloudinary:
+  url: ${CLOUDINARY_URL:}
+  timeout-ms: ${CLOUDINARY_TIMEOUT_MS:30000}
