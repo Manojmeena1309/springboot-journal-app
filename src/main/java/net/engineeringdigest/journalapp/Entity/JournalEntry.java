@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 
 @Document(collection = "journal_entries")
 @Data  // equivalent to getter, setter
@@ -24,6 +25,12 @@ public class JournalEntry {
     private String title;
 
     private String content;
+
+    /**
+     * Optional Tiptap document JSON. The legacy content field remains as a
+     * plain-text fallback and card preview for entries created before rich text.
+     */
+    private Map<String, Object> richContent;
 
     private LocalDateTime date = LocalDateTime.now();
 

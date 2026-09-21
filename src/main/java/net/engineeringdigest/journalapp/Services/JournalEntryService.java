@@ -37,6 +37,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 @Slf4j
 @Service
@@ -48,6 +51,9 @@ public class JournalEntryService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ImageService imageService;
+
     // saveEntry
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName){
@@ -55,6 +61,7 @@ public class JournalEntryService {
         log.info("Creating journal entry for user: {}", userName);
 
       try{
+          validateRichContentImages(journalEntry, userName);
           User user = userService.findByUserName(userName);
 
           if(user.getJournalEntries() == null){
@@ -80,6 +87,30 @@ public class JournalEntryService {
     //Update entry
     public void updateEntry(JournalEntry entry){
         journalEntryRepository.save(entry);
+    }
+
+    public void updateEntry(JournalEntry entry, String userName){
+        validateRichContentImages(entry, userName);
+        journalEntryRepository.save(entry);
+    }
+
+    /** Finds image asset ids in Tiptap JSON recursively before a document is saved. */
+    public void validateRichContentImages(JournalEntry entry, String userName) {
+        if (entry.getRichContent() == null) return;
+        Set<String> assetIds = new HashSet<>();
+        collectAssetIds(entry.getRichContent(), assetIds);
+        imageService.validateAssetsOwnedBy(assetIds, userName);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void collectAssetIds(Object value, Set<String> assetIds) {
+        if (value instanceof Map<?, ?> map) {
+            Object assetId = map.get("assetId");
+            if (assetId instanceof String id && !id.isBlank()) assetIds.add(id);
+            for (Object child : map.values()) collectAssetIds(child, assetIds);
+        } else if (value instanceof Iterable<?> values) {
+            for (Object child : values) collectAssetIds(child, assetIds);
+        }
     }
 
     //getAll

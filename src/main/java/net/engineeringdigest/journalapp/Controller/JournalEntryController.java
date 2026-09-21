@@ -152,11 +152,15 @@ public class JournalEntryController {
             old.setTitle((newEntry.getTitle()));
         }
 
-        if(newEntry.getContent() != null && !newEntry.getContent().isEmpty()){
+        if(newEntry.getContent() != null){
             old.setContent(newEntry.getContent());
         }
 
-        journalEntryService.updateEntry(old);
+        if(newEntry.getRichContent() != null){
+            old.setRichContent(newEntry.getRichContent());
+        }
+
+        journalEntryService.updateEntry(old, userName);
 
         return ResponseEntity.ok(old);
     }
